@@ -1,0 +1,30 @@
+body::-webkit-scrollbar-track {
+    background-color: #00000000;
+}
+
+@supports(overflow: overlay) {
+    body {
+        overflow: overlay;
+    }
+
+    body::-webkit-scrollbar-track {
+        @apply bg-background;
+    }
+}
+
+body::-webkit-scrollbar {
+    display: block;
+    width: 8px;
+}
+
+body::-webkit-scrollbar-button {
+    display: none;
+}
+
+body::-webkit-scrollbar-track-piece {
+    background-color: #00000000;
+}
+
+body::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-border;
+}

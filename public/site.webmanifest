@@ -1,0 +1,14 @@
+{
+  "name": "Rompt.ai",
+  "short_name": "Rompt.ai",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "type": "image/x-icon",
+      "sizes": "16x16 32x32"
+    }
+  ],
+  "theme_color": "#030711",
+  "background_color": "#030711",
+  "display": "standalone"
+}

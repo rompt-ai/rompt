@@ -1,0 +1,9 @@
+dist
+node_modules
+.next
+build
+.contentlayer
+assets
+.eslintrc.js
+.eslintrc.json
+next.config.json

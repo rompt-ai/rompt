@@ -1,0 +1,148 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model ServiceKey {
+  service   ServiceKeyType
+  key       String
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  projectId String
+  project   Project        @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@id([service, projectId])
+}
+
+enum ServiceKeyType {
+  openai
+}
+
+model Prompt {
+  id                   String                       @default(dbgenerated("nanoid(11)")) @db.VarChar(11)
+  name                 String
+  text                 String
+  description          String?
+  createdAt            DateTime                     @default(now())
+  updatedAt            DateTime                     @updatedAt
+  version              Int
+  experimentPrompts    ExperimentPrompt[]
+  projectId            String                       @db.VarChar(11)
+  project              Project                      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  type                 PromptType
+  variableDescriptions PromptVariableDescriptions[]
+
+  @@id([id, version])
+  @@index([version(sort: Desc)])
+}
+
+enum PromptType {
+  plaintext
+  LMQL
+}
+
+// This is not the source of variables in prompts, but rather
+// the source of descriptions for some OR all variables. To
+// determine which variables are in a prompt, we need use regex
+// for now. Eventually, we should all people turn off specific
+// variables that may be real words in their prompt.
+model PromptVariableDescriptions {
+  key           String
+  description   String
+  promptId      String
+  promptVersion Int
+  prompt        Prompt @relation(fields: [promptId, promptVersion], references: [id, version], onDelete: Cascade)
+
+  @@id([promptId, promptVersion, key])
+}
+
+model Experiment {
+  id                  String               @id @default(dbgenerated("nanoid(11)")) @db.VarChar(11)
+  name                String
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  projectId           String
+  didLaunch           Boolean
+  nResponseVariations Int
+  nVariableVariations Int
+  // nMagicVariables     Int?
+  // nMagicPrompts       Int?
+  reportingType       ReportingType
+  project             Project              @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  experimentPrompts   ExperimentPrompt[]
+  experimentVariables ExperimentVariable[]
+}
+
+enum ReportingType {
+  approval
+  numeric
+}
+
+model ExperimentVariable {
+  name         String
+  value        String
+  variation    Int
+  experimentId String
+  experiment   Experiment @relation(fields: [experimentId], references: [id], onDelete: Cascade)
+
+  @@id([experimentId, name, variation])
+  @@index([experimentId])
+}
+
+// Multiple prompts of the same version and id can exist in the same experiment
+model ExperimentPrompt {
+  id                      String                   @id @default(dbgenerated("nanoid(11)")) @db.VarChar(11)
+  promptId                String
+  promptVersion           Int
+  prompt                  Prompt                   @relation(fields: [promptId, promptVersion], references: [id, version], onDelete: Cascade)
+  experimentId            String
+  experiment              Experiment               @relation(fields: [experimentId], references: [id], onDelete: Cascade)
+  experimentPromptRatings ExperimentPromptRating[]
+  variableVariation       Int
+
+  temperature      Float
+  topP             Float
+  frequencyPenalty Float
+  presencePenalty  Float
+  maxTokens        Int?
+  model            String
+
+  outputGenerationStatus OutputGenerationStatus
+  output                 String?
+}
+
+enum OutputGenerationStatus {
+  ready
+  inProgress
+  complete
+  failed
+}
+
+model ExperimentPromptRating {
+  score              Int
+  experimentPromptId String
+  experimentPrompt   ExperimentPrompt @relation(fields: [experimentPromptId], references: [id], onDelete: Cascade)
+  projectId          String
+  project            Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@id([experimentPromptId, projectId])
+}
+
+model Project {
+  id                      String                   @id @default(dbgenerated("nanoid(11)")) @db.VarChar(11)
+  name                    String
+  createdAt               DateTime                 @default(now())
+  updatedAt               DateTime                 @updatedAt
+  prompts                 Prompt[]
+  experiments             Experiment[]
+  experimentPromptRatings ExperimentPromptRating[]
+  serviceKeys             ServiceKey[]
+}
