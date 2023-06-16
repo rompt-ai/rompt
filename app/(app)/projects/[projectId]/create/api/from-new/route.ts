@@ -13,7 +13,7 @@ const schema = z.object({
 
 export type ResponseData = Prompt | z.ZodError<z.infer<typeof schema>>
 
-export const POST = async function (req, _, session) {
+export const POST = async function (req, _) {
     const parseResult = schema.safeParse(await req.json())
 
     if (!parseResult.success) {

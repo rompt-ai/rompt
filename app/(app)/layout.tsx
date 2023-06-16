@@ -1,14 +1,13 @@
 import { Suspense } from "react"
 
-import { NavBarWrapper } from "./components/NavBarWrapper"
+import { NavBar } from "@/components/NavBar"
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     return (
         <>
             <Suspense>
                 <Suspense>
-                    {/* @ts-ignore */}
-                    <NavBarWrapper />
+                    <NavBar />
                 </Suspense>
             </Suspense>
             {children}

@@ -4,7 +4,6 @@ import Link from "next/link"
 import { useParams, usePathname, useSelectedLayoutSegments } from "next/navigation"
 import { Disclosure } from "@headlessui/react"
 import { Menu, X } from "lucide-react"
-import { signOut } from "next-auth/react"
 
 import { cn } from "@/lib/utils"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -19,10 +18,9 @@ import { Logo } from "@/components/Logo"
 
 interface NavBarProps {
     className?: string
-    email: string
 }
 
-export function NavBar({ className, email }: NavBarProps) {
+export function NavBar({ className }: NavBarProps) {
     const pathname = usePathname()
     const segments = useSelectedLayoutSegments()
     const { projectId } = useParams()!
@@ -86,29 +84,6 @@ export function NavBar({ className, email }: NavBarProps) {
                                         ))}
                                     </div>
                                 </div>
-                            </div>
-                            <div className='pr-2'>
-                                <DropdownMenu>
-                                    <DropdownMenuTrigger>
-                                        <Avatar>
-                                            <AvatarImage />
-                                            <AvatarFallback className='bg-secondary'>{email?.slice(0, 1).toUpperCase()}</AvatarFallback>
-                                        </Avatar>
-                                    </DropdownMenuTrigger>
-                                    <DropdownMenuContent align='end'>
-                                        <Link href={"/settings"}>
-                                            <DropdownMenuItem>Settings</DropdownMenuItem>
-                                        </Link>
-                                        <DropdownMenuSeparator />
-                                        <DropdownMenuItem
-                                            onClick={() => {
-                                                signOut()
-                                            }}
-                                        >
-                                            Sign out
-                                        </DropdownMenuItem>
-                                    </DropdownMenuContent>
-                                </DropdownMenu>
                             </div>
                         </div>
                     </div>

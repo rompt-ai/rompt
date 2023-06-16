@@ -2,7 +2,6 @@ import { NextResponse } from "next/server"
 import { OpenAIApi, Configuration as OpenAIConfiguration } from "openai"
 import { z } from "zod"
 
-import { withAuthentication } from "@/lib/api-middlewares/with-authentication"
 import { MAX_COMPLETION_TOKENS } from "@/lib/openai/vars"
 
 const schema = z.object({
@@ -17,7 +16,7 @@ export type ParseResponse = {
 
 export type ResponseData = ParseResponse | z.ZodError<z.infer<typeof schema>>
 
-export const POST = withAuthentication(async function (req, ctx, session) {
+export const POST = async function (req, ctx) {
     const parseResult = schema.safeParse(await req.json())
 
     if (!parseResult.success) {
@@ -87,7 +86,7 @@ Score: {your score for your new prompt}
             status: 200,
         })
     }
-})
+}
 
 function parseText(text: string): ParseResponse {
     const promptRegex = /New prompt: \"(.*?)\"(.*?)(?:Intent:|$)/s

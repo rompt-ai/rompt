@@ -1,7 +1,6 @@
 {
   "name": "rompt",
   "version": "0.1.0",
-  "private": true,
   "scripts": {
     "dev": "next dev",
     "turbo": "next dev --turbo",

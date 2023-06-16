@@ -3,7 +3,6 @@ import { ServiceKeyType } from "@prisma/client"
 import { OpenAIApi, Configuration as OpenAIConfiguration } from "openai"
 import { z } from "zod"
 
-import { withAuthentication } from "@/lib/api-middlewares/with-authentication"
 import { prisma } from "@/lib/prisma"
 
 const schema = z.object({
@@ -13,7 +12,7 @@ const schema = z.object({
 
 export type ResponseData = { success: true } | z.ZodError<z.infer<typeof schema>>
 
-export const POST = withAuthentication(async function (req, ctx, session) {
+export const POST = async function (req, { params: { projectId } }) {
     const parseResult = schema.safeParse(await req.json())
 
     if (!parseResult.success) {
@@ -48,10 +47,10 @@ export const POST = withAuthentication(async function (req, ctx, session) {
 
             await prisma.serviceKey.upsert({
                 where: {
-                    service_userId: {
+                    service_projectId: {
+                        projectId,
                         service,
-                        userId: session.user.id,
-                    },
+                    }
                 },
                 update: {
                     key,
@@ -59,7 +58,7 @@ export const POST = withAuthentication(async function (req, ctx, session) {
                 create: {
                     key,
                     service,
-                    userId: session.user.id,
+                    projectId,
                 },
             })
 
@@ -78,4 +77,4 @@ export const POST = withAuthentication(async function (req, ctx, session) {
             })
         }
     }
-})
+}

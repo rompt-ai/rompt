@@ -1,7 +1,7 @@
 import type { Prompt } from "@prisma/client"
 
 import type { getServicesWithValidKeys } from "@/lib/requests/getServicesWithValidKeys"
-import type { getUserExperiment } from "@/lib/requests/getExperiment"
+import type { getExperiment } from "@/lib/requests/getExperiment"
 import { SafeSerializeCast } from "@/lib/safeSerialize"
 
 import type { ModelOptions } from "../api/launch/route"
@@ -50,7 +50,7 @@ type AllowUndefined<T> = {
     [P in keyof T]?: T[P] | undefined
 }
 export type LaunchExperimentPageProps = {
-    experiment: Awaited<ReturnType<typeof getUserExperiment>>
+    experiment: Awaited<ReturnType<typeof getExperiment>>
     prompts: SafeSerializeCast<Prompt[]>
     servicesWithValidKeys: SafeSerializeCast<Awaited<ReturnType<typeof getServicesWithValidKeys>>>
 }

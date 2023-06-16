@@ -10,7 +10,7 @@ export type ResponseData =
           version: number
       }[]
 
-export const POST = async function (req, { params: { projectId } }, session) {
+export const POST = async function (req, { params: { projectId } }) {
     const promptsInProject = await prisma.project.findUnique({
         where: {
             id: projectId,

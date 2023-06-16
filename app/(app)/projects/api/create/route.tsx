@@ -10,7 +10,7 @@ const schema = z.object({
 
 export type ResponseData = Project | z.ZodError<z.infer<typeof schema>>
 
-export const POST = async function (req, ctx, session) {
+export const POST = async function (req, ctx) {
     const parseResult = schema.safeParse(await req.json())
 
     if (!parseResult.success) {

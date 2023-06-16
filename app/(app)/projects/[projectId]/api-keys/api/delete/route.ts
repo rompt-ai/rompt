@@ -2,7 +2,6 @@ import { NextResponse } from "next/server"
 import { ServiceKeyType } from "@prisma/client"
 import { z } from "zod"
 
-import { withAuthentication } from "@/lib/api-middlewares/with-authentication"
 import { prisma } from "@/lib/prisma"
 
 const schema = z.object({
@@ -11,7 +10,7 @@ const schema = z.object({
 
 export type ResponseData = { success: true } | z.ZodError<z.infer<typeof schema>>
 
-export const POST = withAuthentication(async function (req, ctx, session) {
+export const POST = async function (req, { params: { projectId } }) {
     const parseResult = schema.safeParse(await req.json())
 
     if (!parseResult.success) {
@@ -27,10 +26,10 @@ export const POST = withAuthentication(async function (req, ctx, session) {
 
     await prisma.serviceKey.delete({
         where: {
-            service_userId: {
+            service_projectId: {
+                projectId,
                 service,
-                userId: session.user.id,
-            },
+            }
         },
     })
 
@@ -40,4 +39,4 @@ export const POST = withAuthentication(async function (req, ctx, session) {
         },
         status: 200,
     })
-})
+}

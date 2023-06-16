@@ -4,8 +4,12 @@ import { ServiceKeyForm } from "./components/ServiceKeyForm"
 
 export const dynamic = "force-dynamic"
 
-export default async function Page() {
-    const serviceKeys = await getServiceKeys()
+export default async function Page({
+    params: { projectId },
+}: {
+    params: { projectId: string }
+}) {
+    const serviceKeys = await getServiceKeys(projectId)
 
     return (
         <ServiceKeyForm
