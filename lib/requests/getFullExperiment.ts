@@ -20,8 +20,8 @@ export const getFullExperiment = dedupe(async (projectId: string, experimentId: 
                             experimentPrompts: {
                                 where: experimentPromptId
                                     ? {
-                                        id: experimentPromptId,
-                                    }
+                                          id: experimentPromptId,
+                                      }
                                     : undefined,
                                 include: {
                                     experimentPromptRatings: true,

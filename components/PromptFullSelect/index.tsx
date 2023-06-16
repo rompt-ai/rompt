@@ -5,7 +5,7 @@ import { errorToast } from "@/lib/errorToast"
 import { generateIdToNameVersionMap } from "@/lib/generateIdToNameVersionMap"
 import { cn } from "@/lib/utils"
 import { useToast } from "@/hooks/use-toast"
-import { ResponseData } from "@/app/(app)/projects/[projectId]/create/api/list-prompts/route"
+import { ResponseData } from "@/app/(app)/[projectId]/create/api/list-prompts/route"
 
 import CreateSelect, { SelectLoadingPlaceholder } from "../CreateSelect"
 
@@ -53,7 +53,7 @@ export function PromptFullSelect({
 }: PromptFullSelectProps) {
     const { toast } = useToast()
     const { data: listPromptsInProjectData = [], loading: listPromptsInProjectLoading } = useFetch<ResponseData>(
-        `/projects/${projectId}/create/api/list-prompts`,
+        `/${projectId}/create/api/list-prompts`,
         {
             onError: () => toast(errorToast),
             cachePolicy: CachePolicies.NO_CACHE,
