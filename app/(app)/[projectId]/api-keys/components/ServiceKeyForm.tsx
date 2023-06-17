@@ -108,8 +108,8 @@ export function ServiceKeyForm({
     const OpenAiEye = isOpenaiKeyVisible ? EyeOff : Eye
 
     return (
-        <div className='space-y-6'>
-            <div className='grid w-full max-w-sm items-center gap-1.5'>
+        <div className='space-y-6 pt-10'>
+            <div className='mx-auto grid w-full max-w-sm items-center gap-1.5'>
                 <Label htmlFor='openai-key-input'>OpenAI key</Label>
                 <div className='flex w-full max-w-sm items-center space-x-2'>
                     <div className='relative'>

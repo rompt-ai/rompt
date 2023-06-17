@@ -2,6 +2,7 @@
 
 import { useMemo, useRef, useState } from "react"
 import Link from "next/link"
+import { useParams } from "next/navigation"
 import { Close as PrimitiveClose } from "@radix-ui/react-popover"
 import { AlertTriangle, Import, Loader2, Plus, PlusCircle, Rocket } from "lucide-react"
 import { nanoid } from "nanoid"
@@ -41,7 +42,7 @@ export function SelectPromptsPage({
     onLaunch: (selectedPrompts: (ImportedPrompt | NewPromptComplete)[], variableToVariationMap: VariableToVariationMap) => Promise<void>
 }) {
     const { toast } = useToast()
-
+    const { projectId } = useParams()
     const idToNameVersionMap = useMemo(() => generateIdToNameVersionMap(prompts), [prompts])
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
 
@@ -77,6 +78,10 @@ export function SelectPromptsPage({
 
     const newPromptToGetDetailsMap = useRef<Record<string, GetDetailsFn>>({})
 
+    const getPromptOfVersion = (promptId: string, version: number) => {
+        return idToNameVersionMap[promptId].find((ele) => ele.version === version)
+    }
+
     useInterval(() => {
         const promptVariables: typeof generatingVariables = {}
 
@@ -94,7 +99,7 @@ export function SelectPromptsPage({
         for (const selectedPrompt of selectedPrompts) {
             if (isSelectedPromptImported(selectedPrompt)) {
                 const { promptId, promptVersion, uiId } = selectedPrompt
-                const { text, name } = idToNameVersionMap[promptId][promptVersion - 1]
+                const { text, name } = getPromptOfVersion(promptId, promptVersion)!
                 addTotalVariables(uiId, name, text)
             } else {
                 const getDetails = newPromptToGetDetailsMap.current[selectedPrompt.uiId]
@@ -125,8 +130,8 @@ export function SelectPromptsPage({
                     description: (
                         <span className='text-foreground'>
                             Head to{" "}
-                            <Link href='/settings/api-keys' className='font-semibold underline underline-offset-2'>
-                                Settings &#8594; API Keys
+                            <Link href={`/${projectId}/api-keys`} className='font-semibold underline underline-offset-2'>
+                                API Keys
                             </Link>{" "}
                             to add a new key.
                         </span>
@@ -170,7 +175,7 @@ export function SelectPromptsPage({
                 {selectedPrompts.map((prompt) => {
                     if (isSelectedPromptImported(prompt)) {
                         const { promptVersion, promptId, model, uiId, ...modelOpts } = prompt
-                        const { name, text, type } = idToNameVersionMap[promptId][promptVersion - 1]
+                        const { name, text, type } = getPromptOfVersion(promptId, promptVersion)!
                         return (
                             <ImportedPromptRow
                                 key={uiId}

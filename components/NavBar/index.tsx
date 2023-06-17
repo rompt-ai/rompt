@@ -6,14 +6,6 @@ import { Disclosure } from "@headlessui/react"
 import { Menu, X } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import { Logo } from "@/components/Logo"
 
 interface NavBarProps {
@@ -26,7 +18,7 @@ export function NavBar({ className }: NavBarProps) {
     const { projectId } = useParams()!
 
     const navigation =
-        segments[0] === "settings" || segments.length === 0
+        segments.length === 0
             ? []
             : ([
                   { name: "Projects", href: "/" },
@@ -46,7 +38,7 @@ export function NavBar({ className }: NavBarProps) {
                             segments.length === 0 ||
                                 (segments[segments.length - 1] === "create" && segments[segments.length - 2] !== "experiments") ||
                                 segments[segments.length - 1] === "compare" ||
-                                segments.includes("settings")
+                                segments[segments.length - 1] === "api-keys"
                                 ? "bg-background"
                                 : "bg-muted/30",
                             className

@@ -15,7 +15,7 @@ export default function PromptActions(props: { promptName: string; projectId: st
     return (
         <div className='flex space-x-4'>
             <PromptEditDropdown {...props} />
-            {pathname?.split("/").length === 5 && (
+            {pathname?.split("/").length === 4 && (
                 <Button
                     disabled={isSaveButtonDisabled}
                     onClick={() => {
