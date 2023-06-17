@@ -18,10 +18,7 @@ First, clone the repository and install the dependencies:
 ```sh
 git clone https://github.com/rompt-ai/rompt.git
 cd rompt
-npm install
-cd stream
-npm install
-cd ..
+npm i
 ```
 
 Then, create a `.env` file in the root directory following using the schema of the `.env.example` file.
@@ -34,11 +31,25 @@ Then, create a `.env` file in the root directory following using the schema of t
 | `HMAC_SECRET` | A secret string used in requests to the stream server. |
 
 
+Next, configure your database with Prisma with the following command. _Note that this will drop any existing tables in your database._
+
+```sh
+npm run reset:db
+```
+
+Then, install the dependencies for the stream server:
+
+```sh
+cd stream
+npm i
+cd ..
+```
+
 Finally, build and start the server:
 
 ```
-npm build
-npm start
+npm run build
+npm run start
 ```
 
 Navigate to [http://localhost:3000](http://localhost:3000) to access the web app.

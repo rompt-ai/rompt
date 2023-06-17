@@ -1,12 +1,9 @@
 "use client"
 
 import { useMemo, useRef, useState } from "react"
-import Link from "next/link"
-import { useParams } from "next/navigation"
 import { Close as PrimitiveClose } from "@radix-ui/react-popover"
 import { AlertTriangle, Import, Loader2, Plus, PlusCircle, Rocket } from "lucide-react"
 import { nanoid } from "nanoid"
-import { capitalize, split } from "strz"
 
 import { generateIdToNameVersionMap } from "@/lib/generateIdToNameVersionMap"
 import { isEqual } from "@/lib/isEqual"
@@ -36,13 +33,11 @@ import {
 export function SelectPromptsPage({
     experiment,
     prompts,
-    servicesWithValidKeys,
     onLaunch,
 }: LaunchExperimentPageProps & {
     onLaunch: (selectedPrompts: (ImportedPrompt | NewPromptComplete)[], variableToVariationMap: VariableToVariationMap) => Promise<void>
 }) {
     const { toast } = useToast()
-    const { projectId } = useParams()
     const idToNameVersionMap = useMemo(() => generateIdToNameVersionMap(prompts), [prompts])
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
 
@@ -122,26 +117,6 @@ export function SelectPromptsPage({
         setIsSubmitting(true)
         const launchPrompts: (ImportedPrompt | NewPromptComplete)[] = []
         for (const selectedPrompt of selectedPrompts) {
-            // Check 1
-            const [provider] = split(selectedPrompt.model, "/")
-            if (!servicesWithValidKeys.includes(provider)) {
-                toast({
-                    title: `No ${capitalize(provider)} API key found.`,
-                    description: (
-                        <span className='text-foreground'>
-                            Head to{" "}
-                            <Link href={`/${projectId}/api-keys`} className='font-semibold underline underline-offset-2'>
-                                API Keys
-                            </Link>{" "}
-                            to add a new key.
-                        </span>
-                    ),
-                    variant: "destructive",
-                })
-                setIsSubmitting(false)
-                return
-            }
-
             if (isSelectedPromptImported(selectedPrompt)) {
                 launchPrompts.push(selectedPrompt)
             } else {

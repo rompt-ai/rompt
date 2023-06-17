@@ -25,7 +25,6 @@ export function NavBar({ className }: NavBarProps) {
                   { name: "Compare", href: `/${projectId}/compare` },
                   { name: "Experiments", href: `/${projectId}/experiments` },
                   { name: "Create prompt", href: `/${projectId}/create` },
-                  { name: "API Keys", href: `/${projectId}/api-keys` },
               ] as const)
 
     return (
@@ -37,8 +36,7 @@ export function NavBar({ className }: NavBarProps) {
                             "mx-auto px-4 md:px-24 lg:px-36",
                             segments.length === 0 ||
                                 (segments[segments.length - 1] === "create" && segments[segments.length - 2] !== "experiments") ||
-                                segments[segments.length - 1] === "compare" ||
-                                segments[segments.length - 1] === "api-keys"
+                                segments[segments.length - 1] === "compare"
                                 ? "bg-background"
                                 : "bg-muted/30",
                             className

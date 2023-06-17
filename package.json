@@ -13,7 +13,8 @@
     "lint:next": "next lint",
     "preview:next": "next build && next start",
     "postinstall": "prisma generate",
-    "prettier-format": "prettier --config prettier.config.js './**/*{.ts,.tsx,.js,.jsx}' --write"
+    "prettier-format": "prettier --config prettier.config.js './**/*{.ts,.tsx,.js,.jsx}' --write",
+    "reset:db": "prisma migrate reset --force"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.13",
@@ -47,7 +48,7 @@
     "@radix-ui/react-toggle": "^1.0.2",
     "@radix-ui/react-toggle-group": "^1.0.3",
     "@radix-ui/react-tooltip": "^1.0.5",
-    "class-variance-authority": "^0.4.0",
+    "class-variance-authority": "^0.5.0",
     "clsx": "^1.2.1",
     "dayjs": "^1.11.7",
     "diff": "^5.1.0",
@@ -70,7 +71,7 @@
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^3.7.2",
-    "@newhighsco/next-plugin-svgr": "^3.0.87",
+    "@newhighsco/next-plugin-svgr": "3.0.93",
     "@types/diff": "^5.0.3",
     "@types/node": "^18.15.11",
     "@types/react": "18.0.15",

@@ -1,7 +1,4 @@
 -- CreateEnum
-CREATE TYPE "ServiceKeyType" AS ENUM ('openai');
-
--- CreateEnum
 CREATE TYPE "PromptType" AS ENUM ('plaintext', 'LMQL');
 
 -- CreateEnum
@@ -9,17 +6,6 @@ CREATE TYPE "ReportingType" AS ENUM ('approval', 'numeric');
 
 -- CreateEnum
 CREATE TYPE "OutputGenerationStatus" AS ENUM ('ready', 'inProgress', 'complete', 'failed');
-
--- CreateTable
-CREATE TABLE "ServiceKey" (
-    "service" "ServiceKeyType" NOT NULL,
-    "key" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-    "projectId" TEXT NOT NULL,
-
-    CONSTRAINT "ServiceKey_pkey" PRIMARY KEY ("service","projectId")
-);
 
 -- CreateTable
 CREATE TABLE "Prompt" (
@@ -114,9 +100,6 @@ CREATE INDEX "Prompt_version_idx" ON "Prompt"("version" DESC);
 
 -- CreateIndex
 CREATE INDEX "ExperimentVariable_experimentId_idx" ON "ExperimentVariable"("experimentId");
-
--- AddForeignKey
-ALTER TABLE "ServiceKey" ADD CONSTRAINT "ServiceKey_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Project"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Prompt" ADD CONSTRAINT "Prompt_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Project"("id") ON DELETE CASCADE ON UPDATE CASCADE;

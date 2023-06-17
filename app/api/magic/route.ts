@@ -70,7 +70,7 @@ Score: {your score for your new prompt}
         ],
     })
 
-    if (completion.data.choices[0].message) {
+    if (completion.data.choices[0].message?.content) {
         return new NextResponse(JSON.stringify(parseText(completion.data.choices[0].message.content.replaceAll(`"""`, "").trim())), {
             headers: {
                 "Content-Type": "application/json",

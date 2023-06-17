@@ -2,7 +2,6 @@ import { redirect } from "next/navigation"
 
 import { prisma } from "@/lib/prisma"
 import { getExperiment } from "@/lib/requests/getExperiment"
-import { getServicesWithValidKeys } from "@/lib/requests/getServicesWithValidKeys"
 import safeSerialize from "@/lib/safeSerialize"
 
 import { LaunchExperimentPageRouter } from "./components/LaunchExperimentPageRouter"
@@ -15,9 +14,8 @@ export default async function Page({
     params: { projectId: string; experimentId: string }
     searchParams: { [key: string]: string | string[] | undefined }
 }) {
-    const [experiment, servicesWithValidKeys, prompts] = await Promise.all([
+    const [experiment, prompts] = await Promise.all([
         getExperiment(params.projectId, params.experimentId),
-        getServicesWithValidKeys(params.projectId),
         prisma.prompt
             .findMany({
                 where: {
@@ -34,5 +32,5 @@ export default async function Page({
         redirect(`/${params.projectId}/experiments/${params.experimentId}`)
     }
 
-    return <LaunchExperimentPageRouter experiment={experiment} prompts={prompts} servicesWithValidKeys={servicesWithValidKeys} />
+    return <LaunchExperimentPageRouter experiment={experiment} prompts={prompts} />
 }

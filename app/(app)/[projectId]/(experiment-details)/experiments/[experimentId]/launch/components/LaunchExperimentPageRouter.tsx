@@ -7,7 +7,7 @@ import { ResponseData as FromNewResponseData } from "../../../../../create/api/f
 import { SelectPromptsPage } from "./SelectPromptsPage"
 import { ImportedPrompt, LaunchExperimentPageProps, NewPromptComplete, isSelectedPromptImported } from "./types"
 
-export function LaunchExperimentPageRouter({ experiment, prompts, servicesWithValidKeys }: LaunchExperimentPageProps) {
+export function LaunchExperimentPageRouter({ experiment, prompts }: LaunchExperimentPageProps) {
     const { projectId } = useParams()!
     const pathname = usePathname()!
     const router = useRouter()
@@ -16,7 +16,6 @@ export function LaunchExperimentPageRouter({ experiment, prompts, servicesWithVa
         <SelectPromptsPage
             experiment={experiment}
             prompts={prompts}
-            servicesWithValidKeys={servicesWithValidKeys}
             onLaunch={async (prompts, variableToVariationMap) => {
                 const promptsForExperimentRun: ImportedPrompt[] = []
 

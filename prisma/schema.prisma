@@ -10,21 +10,6 @@ datasource db {
   url               = env("DATABASE_URL")
 }
 
-model ServiceKey {
-  service   ServiceKeyType
-  key       String
-  createdAt DateTime       @default(now())
-  updatedAt DateTime       @updatedAt
-  projectId String
-  project   Project        @relation(fields: [projectId], references: [id], onDelete: Cascade)
-
-  @@id([service, projectId])
-}
-
-enum ServiceKeyType {
-  openai
-}
-
 model Prompt {
   id                   String                       @default(dbgenerated("nanoid(11)")) @db.VarChar(11)
   name                 String
@@ -143,5 +128,4 @@ model Project {
   prompts                 Prompt[]
   experiments             Experiment[]
   experimentPromptRatings ExperimentPromptRating[]
-  serviceKeys             ServiceKey[]
 }
