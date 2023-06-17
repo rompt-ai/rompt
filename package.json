@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "concurrently \"npm:dev:*\"",
     "start": "concurrently \"npm:start:*\"",
+    "build": "concurrently \"npm:build:*\"",
     "dev:next": "next dev",
     "dev:stream": "cd stream && npm start",
     "build:next": "next build",
