@@ -6,10 +6,13 @@
 import cors from "@fastify/cors"
 import { config } from "dotenv"
 import { join } from "path"
+import { fileURLToPath } from "url"
 
 import fastify from "fastify"
 
 import { createRunPlaintextExperimentPromptRoute } from "./routes/createRunPlaintextExperimentPromptRoute"
+
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
 config({
     path: join(__dirname, "../", ".env"),

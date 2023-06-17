@@ -1,5 +1,6 @@
 {
-  "name": "stream",
+  "name": "@rompt/stream",
+  "main": "./stream.ts",
   "type": "module",
   "scripts": {
     "start": "node --loader @swc-node/register/esm ./stream.ts",
@@ -13,6 +14,7 @@
     "fastify": "^4.18.0",
     "nanoid": "^4.0.2",
     "openai-streams": "^5.16.0",
+    "yield-stream": "^3.1.0",
     "zod": "^3.21.4"
   },
   "devDependencies": {

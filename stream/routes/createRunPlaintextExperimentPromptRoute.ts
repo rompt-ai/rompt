@@ -3,10 +3,8 @@ import { generateRunExperimentPromptHmac } from "../lib/generateRunExperimentPro
 import { prisma } from '../lib/prisma'
 import { OutputGenerationStatus } from "@prisma/client"
 import { FastifyInstance } from "fastify"
-import opanaistreams from "openai-streams/node"
+import { OpenAI } from "../lib/openaistreamsnode"
 import z from "zod"
-
-const { OpenAI } = opanaistreams
 
 const schema = z.object({
     experimentPromptId: z.string(),
