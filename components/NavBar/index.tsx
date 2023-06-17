@@ -58,7 +58,9 @@ export function NavBar({ className }: NavBarProps) {
                             </div>
                             <div className='flex flex-1 items-center justify-start'>
                                 <div className={cn("sm:ml-0", navigation.length && "ml-12")}>
-                                    <Logo />
+                                    <Link href="https://rompt.ai">
+                                        <Logo />
+                                    </Link>
                                 </div>
                                 <div className={cn("hidden sm:ml-10 sm:block")}>
                                     <div className='flex space-x-1'>
