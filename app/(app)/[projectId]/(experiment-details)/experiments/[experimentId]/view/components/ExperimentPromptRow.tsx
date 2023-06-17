@@ -93,7 +93,7 @@ export function ExperimentPromptRow({
         let aborter: AbortController | undefined
         if (outputGenerationStatus === OutputGenerationStatus.ready) {
             aborter = new AbortController()
-            fetch(`https://crun.rompt.ai/run-plaintext-experiment-prompt`, {
+            fetch(`http://localhost:${process.env.NEXT_PUBLIC_STREAM_PORT}/run-plaintext-experiment-prompt`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

@@ -1,6 +1,6 @@
 import { OpenAIChunkTransformer } from "../lib/OpenAIChunkTransformer"
 import { generateRunExperimentPromptHmac } from "../lib/generateRunExperimentPromptHmac"
-import { prisma } from "@/lib/prisma"
+import { prisma } from '../lib/prisma'
 import { OutputGenerationStatus } from "@prisma/client"
 import { FastifyInstance } from "fastify"
 import opanaistreams from "openai-streams/node"

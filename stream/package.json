@@ -2,7 +2,8 @@
   "name": "stream",
   "type": "module",
   "scripts": {
-    "start": "node --loader @swc-node/register/esm ./index.ts"
+    "start": "node --loader @swc-node/register/esm ./stream.ts",
+    "postinstall": "node generatePrismaClient.cjs && prisma generate"
   },
   "dependencies": {
     "@fastify/cors": "^8.3.0",

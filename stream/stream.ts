@@ -1,11 +1,19 @@
+/**
+ * This file cannot be called index.ts, otherwise the next 
+ * builder will try to include it and fail.
+ */
+
 import cors from "@fastify/cors"
 import { config } from "dotenv"
+import { join } from "path"
 
 import fastify from "fastify"
 
 import { createRunPlaintextExperimentPromptRoute } from "./routes/createRunPlaintextExperimentPromptRoute"
 
-config()
+config({
+    path: join(__dirname, "../", ".env"),
+})
 
 const server = fastify({
     trustProxy: true,
@@ -21,7 +29,7 @@ async function main() {
         server.register(createRunPlaintextExperimentPromptRoute)
 
         const address = await server.listen({
-            port: parseInt(process.env.PORT || "3000"),
+            port: parseInt(process.env.NEXT_PUBLIC_STREAM_PORT || "3000"),
         })
         console.log(`server listening on ${address}`)
     } catch (err) {
