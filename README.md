@@ -41,4 +41,4 @@ npm build
 npm start
 ```
 
-
+Navigate to [http://localhost:3000](http://localhost:3000) to access the web app.
