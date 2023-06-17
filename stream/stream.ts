@@ -1,18 +1,17 @@
 /**
- * This file cannot be called index.ts, otherwise the next 
+ * This file cannot be called index.ts, otherwise the next
  * builder will try to include it and fail.
  */
 
-import cors from "@fastify/cors"
-import { config } from "dotenv"
 import { join } from "path"
 import { fileURLToPath } from "url"
-
+import cors from "@fastify/cors"
+import { config } from "dotenv"
 import fastify from "fastify"
 
 import { createRunPlaintextExperimentPromptRoute } from "./routes/createRunPlaintextExperimentPromptRoute"
 
-const __dirname = fileURLToPath(new URL('.', import.meta.url));
+const __dirname = fileURLToPath(new URL(".", import.meta.url))
 
 config({
     path: join(__dirname, "../", ".env"),

@@ -58,7 +58,7 @@ export function NavBar({ className }: NavBarProps) {
                             </div>
                             <div className='flex flex-1 items-center justify-start'>
                                 <div className={cn("sm:ml-0", navigation.length && "ml-12")}>
-                                    <Link href="https://rompt.ai">
+                                    <Link href='https://rompt.ai'>
                                         <Logo />
                                     </Link>
                                 </div>
